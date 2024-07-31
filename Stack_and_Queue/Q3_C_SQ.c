@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 3 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <limits.h>
 
 //////////////////////////////////   linked list /////////////////////////////////
@@ -80,10 +81,10 @@ int main()
 		case 2:
             if(isStackPairwiseConsecutive(&s))
             {
-                printf("The stack is pairwise consecutive.\n");
+                printf("The stack IS pairwise consecutive.\n");
             }
             else{
-                printf("The stack is not pairwise consecutive.\n");
+                printf("The stack is NOT pairwise consecutive.\n");
             }
             removeAllItems(&(s.ll));
             break;
@@ -103,7 +104,55 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+  	/* add your code here */
+  	ListNode* curr = s -> ll.head;
+	ListNode* temp;
+	int stkSize = s -> ll.size;
+
+	if(stkSize ==0){
+		return 0;
+	}else{
+		while(stkSize !=0){
+			//노드의 개수가 짝수일 때는 연속하는지 확인
+			if (stkSize % 2==0){
+				temp = curr -> next;
+				
+				//연속하는 두 숫자의 차가 1이라면, curr = curr->next ->next을 통해 2칸 이동
+				//2칸 이동할 때마다 stkSize -=2로 크기 조정
+				if(abs(temp-> item - curr->item) == 1){
+					curr = curr-> next ->next;
+					stkSize-=2;
+				}
+				
+				else{
+					return 0;
+				}
+			}
+			//노드의 개수가 홀수라면 거짓
+			else{
+				return 0;
+			}
+
+		}
+		//모든 노드 확인 했을 때, 모든 연속하는 두 노드의 차이가 1일 때 결과값 1을 반환
+		return 1;
+	}
+
+
+
+
+	// for (int i=0; i < stackSize; i+=2 ){
+	// 	temp = curr->next;
+	// 	if ((temp == curr-1) || (curr = temp-1)){
+	// 		printf("%d",1);
+	// 	}
+	// 	else{
+	// 		printf("%d",0);
+	// 	}		
+	// }
+	
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

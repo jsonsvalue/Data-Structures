@@ -114,6 +114,16 @@ int main()
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
     /* add your code here */
+	ListNode* curr = ll -> head;
+
+	removeAllItemsFromStack(s);
+	
+	//애초에 push를 할 때 0번째 인덱스부터 넣기 때문에, push함수를 써서 구현하면 됨 ㅋ
+	while ( curr != NULL ){
+		push(s, curr->item);
+		curr = curr->next;
+	}
+
 }
 
 void removeEvenValues(Stack *s)

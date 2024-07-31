@@ -87,16 +87,61 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+// 1. 현재 연결 리스트에 해당 숫자가 존재한다면, 연결 리스트에 추가하지 말 것
+// 2. 새로운 노드가 더해진 곳의 인덱스를 저장할 것 
+// 3. 연결 리스트가 제대로 작동하지 않으면, -1을 출력할 것
 
 int insertSortedLL(LinkedList *ll, int item)
-{
-	/* add your code here */
+{	/* add your code here */
+	// 새로운 노드의 첫 주소를 동적 할당을 통해서 배정한다.
+	// 새로운 노드를 형성할 때, LinkedList의 첫 주소와 내가 정렬하고자하는 데이터를 넣는다.
+
+	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
+	newNode -> item = item;
+	newNode -> next = NULL;
+	int idx = 0;
+
+	// 헤드 노드 자체가 존재하지 않는다면, 연결 리스트의 헤드 노드에 새로운 노드를 넣는다.
+	if(ll->head == NULL){
+		ll -> head =  newNode;
+	}
+	// 헤드 노드가 존재한다면, 헤드 노드를 지정하고 prev & curr을 통한 크기 비교를 해서 새롭게 형성한 노드를 삽입
+	else{
+		ListNode* curr = ll -> head;
+		ListNode* prev = NULL;
+		
+		// 가장 끝 노드까지 순회 & 아이템의 크기 비교를 해서 인덱스를 기록
+		while( curr!= NULL && curr->item < item ){
+			prev = curr; 
+			curr = curr->next;
+			idx++;
+		}
+		
+		// 기존의 노드와 삽입하고자 하는 노드의 데이터가 같을 시, -1을 돌려준다
+		if( curr!= NULL && curr-> item == item ){
+			free(newNode);
+			return -1;
+		}
+		
+		// 기존의 노드와 비교하려는 데이터 조건을 찾았다면, newNode -> next = curr / prev -> next = new Node  
+		newNode -> next = curr;
+		// 헤드 노드 보다 작은 수 일 경우, headNode 앞에 newNode를 넣는다
+		if(prev == NULL){
+			ll->head = newNode;
+		}// 헤드 노드 보다 큰 수 일 경우, headNode 뒤에 newNode를 넣는다
+		 else{
+			prev -> next = newNode;
+		}
+
+	} 
+		
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
-
+	// 연결 리스트가 비어 있을 시, curr = ll -> head 
 	ListNode *cur;
 	if (ll == NULL)
 		return;

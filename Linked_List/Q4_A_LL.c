@@ -87,6 +87,42 @@ int main()
 void moveEvenItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	
+	ListNode *curr = ll->head;
+	ListNode *prev, *last, *temp;
+
+	//마지막 노드의 인덱스를 확인
+	last = findNode(ll, ll->size -1);
+	int orgSize = ll->size;
+
+	for(int i=0; i < orgSize; i++){
+		// 다음 노드에 대한 연결 정보를 기록
+		temp = curr->next;
+		//1) 현재 값이 짝수인지 확인
+		if(curr->item % 2 == 0){
+			if(ll->head == curr){
+				//헤드 노드에 짝수가 있다면, 다음 노드를 헤드 노드로 지정
+				ll->head = curr->next;
+			}else{
+				// 헤드노드가 아닌 노드에 짝수가 있다면, 해당 노드와의 연결을 끊고 해당 노드 다음 노드를 연결
+				prev->next = curr->next;
+			}
+
+			//짝수인 노드를 가장 마지막 노드로 옮긴다
+			last->next = curr;
+			curr -> next = NULL;
+			last = curr;
+
+		//2) 현재 노드가 홀수인 경우, prev = curr을 하면서 다음 노드로 넘어간다.
+		}else{
+			prev = curr;
+		}
+
+		//temp에 저장했던 curr-> next 정보를 활용해서, 노드를 가리키는 정보를 업데이트한다.
+		curr = temp;
+	}
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

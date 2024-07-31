@@ -9,6 +9,7 @@ Purpose: Implementing the required functions for Question 4 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 //////////////////////////////////   linked list /////////////////////////////////
 
@@ -112,7 +113,23 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	/* add your code here */
+	Stack*s = (Stack *) malloc(sizeof(Stack));
+	s->ll.head = NULL;
+    s->ll.size = 0;
+
+	//큐에서 데이터를 빼서 스택에 넣는다.
+	while( q->ll.size != 0 ){
+		int item = dequeue(q);
+		push(s, item);
+	}
+	
+	//스택에 넣은 데이터를 다시 큐에 넣는다.
+	while( s->ll.size != 0){
+		int item = pop(s);
+		enqueue(q, item);
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

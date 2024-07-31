@@ -102,12 +102,55 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
-{
+{	
+
     /* add your code here */
+	ListNode *curr1, *curr2, *temp1, *temp2 ;
+
+	curr1 = ll1 -> head;
+	curr2 = ll2 -> head;
+
+	int movedNodes = 0;
+
+	while( curr1 != NULL & curr2 != NULL){
+		//기존의 노드 연결 관계를 남겨둬야, 다음 노드를 접근할 수 있어
+		temp1 = curr1 -> next;
+		temp2 = curr2 -> next;
+
+		curr1 -> next = curr2;
+
+		if (curr1 != NULL){
+			curr2 -> next = temp1;
+		}
+
+		//기존의 노드 연결 관계를 업데이트 해서, 다음 노드로 넘겨준다 
+		curr1 = temp1;
+		curr2 = temp2;
+
+		//이동한 노드의 개수를 파악
+		movedNodes++;
+	}
+	
+	//움직인 노드의 개수를 ll1, ll2의 노드 개수에 반영
+	ll1->size +=movedNodes;
+	ll2->size -=movedNodes;
+
+	//ll1의 크기가 더 크다면, ll2의 노드들은 없어
+	if (curr1 != NULL){
+		ll2->head = NULL;
+		ll2->size = 0;
+	}
+	//ll1의 크기가 더 작다면, ll2의 노드들은 남아 있어
+	else{
+		ll2->head = curr2;
+	}	
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+//현재 확인하는 노드가 비어있지 않을 때, 헤드 노드에서부터 끝노드까지 모두 출력한다
 void printList(LinkedList *ll){
 
 	ListNode *cur;

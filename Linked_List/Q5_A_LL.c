@@ -103,6 +103,37 @@ int main()
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
 	/* add your code here */
+	ListNode *curr = ll->head;
+	ListNode *prev;
+
+	int orgSize= ll->size;
+	int midIdx;
+
+	if(orgSize%2 == 1){
+		midIdx = (orgSize + 1) /2;
+	}else{
+		midIdx = orgSize/2;
+	}
+
+	for (int i=0; i < midIdx ; i++){
+		prev = curr;
+		curr = curr ->next;
+	}
+
+	resultFrontList -> head = ll->head;
+	resultBackList -> head = curr;
+
+	//연결 리스트를 주소로 나누고 나서, prev-> next = NULL로 만들어서 연결 리스트의 연결 관계를 끊는다
+	if(prev !=NULL){
+		prev->next = NULL;
+	}
+
+	resultFrontList-> size = midIdx;
+	resultBackList -> size = orgSize - midIdx;
+
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
